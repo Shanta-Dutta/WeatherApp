@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aclonica&display=swap" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+
+    body {
+        background: #17A2B8 url(https://www.kenya.campusfrance.org/sites/pays/files/kenya/new-history-forecast-bulk_0.png);
+
+        background-size: cover;
+    }
+    @media (min-width: 1120px), (min-height: 630px) {
+        body { background-size: auto; }
+    }
+    .forcast{
+    background-image: url(https://www.kenya.campusfrance.org/sites/pays/files/kenya/new-history-forecast-bulk_0.png)
+    }
+
+
+    </style>
+<body >
+
+
+<div class="container bg-light justify-content-center">
+    <div class="row my-4">
+        <div class=" col-md-3  bg-secondary m-3" width="100%"> <img class="my-2" width="100%" height="90%" src="https://e3.365dm.com/16/07/768x432/wf-usa2-1_3495330.jpg">
+        </div>      <div class="m-0 col-md-5 ">
+        <br/>
+        <h1  class="text-center " style="text-shadow: 2px 2px #0DCAF0; font-family: 'Aclonica', sans-serif;">Get Your Local Forecast</h1>
+        <form th:action="@{/}" th:object="${request}"  method="post" autocomplete="off" id="searchForm">
+            <div class="form-group">
+
+                <input id="search" type="text" list="zipCodes" th:field="*{zipCode}"placeholder="Zip Code" class="form-control" />
+                <datalist id="zipCodes"  >
+                    <option th:each="zipCode :${uniqueSearches}" th:text="${zipCode}"  th:value="${zipCode}">enter zipcode</option>
+                </datalist>
+            </div>
+            <div class="form-group">
+                <button class="btn  btn-info btn-block" style="font-weight:bold" name="Submit" value="Submit" type="Submit"  >
+                    Check Weather
+                </button>
+                <button class="btn  btn-secondary btn-block" style="font-weight:bold"  onclick="resetForm()" >
+                    Clear
+                </button>
+            </div>
+
+        </form>
+        <span th:if="${data != null && data.name == 'error'}" class="text-center">
+                        Invalid zip code. Weather data not found.
+                    </span>
+        <div th:if="${data != null && data.name != 'error'}" class="forcast my-2 p-4">
+            <h3>Forecast for <span th:text="${data.name}"></span></h3>
+            <p><b>Temperature:</b> <span th:text="${data.main.get('temp')}"></span>°F</p>
+            <p><b>Feels Like:</b> <span th:text="${data.main.get('feels_like')}"></span>°F</p>
+            <p><b>Humidity:</b> <span th:text="${data.main.get('humidity')}"></span>%</p>
+            <p><b>Cloud Cover:</b> <span th:text="${data.clouds.get('all')}"></span>%</p>
+            <p><b>Wind:</b> <span th:text="${data.wind.get('speed')}"></span>mph</p>
+            <p><b>Conditions:</b> <span th:text="${data.weather[0].get('description')}"></span></p>
+
+            <img th:src="@{${'http://openweathermap.org/img/w/' + data.weather[0].get('icon') + '.png'}}">
+        </div>
+    </div>
+<!--        <div class=" col-md-3  bg-secondary m-3" width="50%"> <img src="https://e3.365dm.com/16/07/768x432/wf-usa2-1_3495330.jpg"></div>-->
+
+<!--</div>-->
+
+<!-- Search History-->
+
+<div class="container my-2">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="card col-md-6">
+            <div class="card-body">
+
+                <div th:switch="${searches}" class="container my-5 text-center">
+                    <div >
+                        <h2 th:case="null">No Searched ZipCodes yet!</h2>
+                        <div th:case="*">
+                            <table class="table table-striped table-responsive-md">
+                                <thead>
+                                <tr>
+                                    <th>Zipcode</th>
+                                    <th>Accessed-At</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="search : ${searches}">
+                                    <td th:text="${search.zipCode}"></td>
+                                    <td th:text="${search.accessedAt}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Search History-->
+</div>
+<script>
+        function resetForm(){
+      document.getElementById("search").text="";
+      document.getElementById("search").value="";
+}
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Weather App</title>-->
+<!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>-->
+<!--</head>-->
+<!--    <style>-->
+
+<!--    body {-->
+<!--        background: #17A2B8 url(https://kiddieroundupcdc.com/wp-content/uploads/2016/06/blue-sky.jpg);-->
+<!--        background-repeat: no-repeat;-->
+<!--        background-position: 0 0;-->
+<!--        background-size: cover;-->
+<!--    }-->
+<!--    @media (min-width: 1120px), (min-height: 630px) {-->
+<!--        body { background-size: auto; }-->
+<!--    }-->
+<!--    .forcast{-->
+<!--    background-image: url(https://ak.picdn.net/shutterstock/videos/2683970/thumb/1.jpg)-->
+<!--    }-->
+
+
+<!--        </style>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; This is our weather form &ndash;&gt;-->
+<!--<div class="col-md-6 offset-md-3">-->
+<!--    <br/>-->
+<!--    <h1 class="text-center">Get Your Local Forecast</h1>-->
+<!--    <form th:action="@{/}" th:object="${request}" method="post" autocomplete="off">-->
+<!--        <div class="form-group">-->
+<!--            <input type="text" th:field="*{zipCode}" placeholder="Zip Code" class="form-control"/>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <button class="btn btn-md btn-primary btn-block" name="Submit" value="Submit" type="Submit">-->
+<!--                Check Weather-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </form>-->
+
+<!--    <span th:if="${data != null && data.name == 'error'}">-->
+<!--  Invalid zip code. Weather data not found.</span>-->
+<!--</div>-->
+
+<!--<hr>-->
+<!--&lt;!&ndash;This is our conditionally rendered weather data &ndash;&gt;-->
+<!--<div th:if="${data != null && data.name != 'error'}">-->
+<!--    <div class="container bg-light justify-content-center">-->
+<!--        <div class="row">-->
+<!--            <div class="col col-md-6 offset-md-3">-->
+<!--                <br/>-->
+<!--                <h3>Forecast for <span th:text="${data.name}"></span></h3>-->
+<!--                <p><b>Temperature:</b> <span th:text="${data.main.get('temp')}"></span> °F</p>-->
+<!--                <p><b>Cloud Cover:</b> <span th:text="${data.clouds.get('all')}"></span> %</p>-->
+<!--                <p><b>Wind:</b> <span th:text="${data.wind.get('speed')}"></span> mph</p>-->
+<!--                <p><b>Conditions:</b> <span th:text="${data.weather[0].get('description')}"></span>-->
+
+<!--                    <img th:src="@{${'http://openweathermap.org/img/w/'-->
+<!--                + data.weather[0].get('icon') + '.png'}}"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--    <h3>Recent Searches</h3>-->
+<!--    <table class="table table-striped">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">#</th>-->
+<!--            <th scope="col">search</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="search : ${searches}">-->
+<!--            <th scope="row" th:text="${search.id}"></th>-->
+<!--            <td  th:text="${search.code}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
